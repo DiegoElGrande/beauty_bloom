@@ -1,0 +1,51 @@
+.slider {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: relative;
+}
+.title{
+    display: flex;
+    flex-direction: column;
+    h2 {
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    a{
+        text-decoration: none;
+        color: gray;
+        font-weight: 500;
+        text-align: center;
+    }
+    h2::before{
+        content: url(/image/icons/flower_left.svg);
+        padding-right: 0.7rem;
+    }
+    h2::after{
+        content: url(/image/icons/flower_right.svg);
+        padding-left: 0.7rem;
+    }
+}
+
+.slider_btn{
+    position: absolute;
+    top: 50%;
+    width: 2.5rem;
+    cursor: pointer;
+    color: rgba(81, 81, 81, 0.513);
+    background-color: transparent;
+    z-index: 1;
+    overflow: none;
+    &.left{
+        left: -5%;
+    }
+    &.right{
+        right: -5%;
+    }
+}
+
+.slider_items {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
