@@ -8,7 +8,7 @@ export default function Footer() {
                 <div className="icons">
                     {linkList.map(( x ) => <img src={`/image/icons/${x}.svg`} height={30} alt={`${x}`} /> )}
                 </div>
-                <div class="footer_content">
+                <div className="footer_content">
                     <div className="contact">
                         <h2>Bloom Beauty</h2>
                         <span>Discover nature's beauty with our natural care products.</span>

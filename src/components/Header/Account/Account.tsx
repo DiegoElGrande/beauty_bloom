@@ -1,7 +1,12 @@
 import './account.modules.scss'
 import { useState } from 'react'
 
-export default function Account({ closeButton }) {
+type AccountProps = {
+    closeButton: () => void;
+};
+
+
+export default function Account({ closeButton }: AccountProps) {
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState('')
 

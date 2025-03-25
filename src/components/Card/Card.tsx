@@ -1,6 +1,13 @@
 import './card.scss'
 
-export default function Card({image, title_card, description, price}) {
+type CardItem = {
+    image: string
+    title_card: string
+    description: string
+    price: number
+}
+
+export default function Card({image, title_card, description, price}: CardItem) {
     return (
         <div className="card_item">
             <img className='card_item_image' src={image} alt="item" />
