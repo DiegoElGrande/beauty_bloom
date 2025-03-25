@@ -15,11 +15,10 @@ export default function Card({image, title_card, description, price}: CardItem) 
                 <div className="item_info">
                     <strong>{title_card}</strong>
                     <div className="raiting">
-                        <img src="/src/image/icons/star.svg" alt="star" />
-                        <img src="/src/image/icons/star.svg" alt="star" />
-                        <img src="/src/image/icons/star.svg" alt="star" />
-                        <img src="/src/image/icons/star.svg" alt="star" />
-                        <img src="/src/image/icons/star.svg" alt="star" />
+                        {
+                        Array({length: 5}).map(() => <img src="/src/assets/image/icons/star.svg" alt="star" />)
+                        }
+                        
                         <p>(5)</p>
                     </div>
                     <p className='description'>{description}</p>

@@ -12,7 +12,7 @@ export default function Blog() {
                 <BlogCard/>
                 <BlogCard/>
             </div>
-            <img src="/src/image/icons/slider_indicator.svg" alt="circle" />
+            <img src="/src/assets/image/icons/slider_indicator.svg" alt="circle" />
         </div>
     )
 }

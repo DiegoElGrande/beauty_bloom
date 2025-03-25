@@ -13,7 +13,7 @@ export default function Account({ closeButton }: AccountProps) {
     return (
         <div className="overwrap">
             <div className="menu_account">
-                <img src="/image/icons/close.svg" alt="close" onClick={closeButton} />
+                <img src="src/assets/image/icons/close.svg" alt="close" onClick={closeButton} />
                 <div className="login">
                     <h2>Log in</h2>
                     <p>Please enter your e-mail and password</p>
