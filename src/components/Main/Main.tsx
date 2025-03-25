@@ -11,7 +11,7 @@ export default function Main() {
         <main>
             <FirstScreen/>
             <Slider title="New Arrivals" content={arrivals}/>
-            {/* <Slider title="Best Sellers" content={slider.bestSellers.content}/> */}
+            <Slider title="Best Sellers" content={arrivals}/>
             <Info/>
             <Blog/>
             <Community/>
