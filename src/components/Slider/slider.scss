@@ -18,11 +18,11 @@
         text-align: center;
     }
     h2::before{
-        content: url(/public/image/icons/flower_left.svg);
+        content: url(/image/icons/flower_left.svg);
         padding-right: 0.7rem;
     }
     h2::after{
-        content: url(/public/image/icons/flower_right.svg);
+        content: url(/image/icons/flower_right.svg);
         padding-left: 0.7rem;
     }
 }

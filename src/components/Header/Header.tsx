@@ -23,15 +23,15 @@ export default function Header() {
                 </nav>
                 <ul className='top_bar_menu'>
                     <li>
-                        <img src="/public/image/icons/search.svg" alt="search" />
+                        <img src="/image/icons/search.svg" alt="search" />
                         <p>search</p>
                     </li>
                     <li onClick={() => setOpen(!open)}>
-                        <img src="/public/image/icons/account.svg" alt="account" />
+                        <img src="/image/icons/account.svg" alt="account" />
                         <p>account</p>
                     </li>
                     <li >
-                        <img src="/public/image/icons/cart.svg" alt="cart" />
+                        <img src="/image/icons/cart.svg" alt="cart" />
                         <p>cart</p>
                     </li>
                 </ul>

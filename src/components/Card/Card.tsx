@@ -16,7 +16,7 @@ export default function Card({image, title_card, description, price}: CardItem) 
                     <strong>{title_card}</strong>
                     <div className="raiting">
                         {
-                        Array.from({length: 5}).map(() => <img src="/public/image/icons/star.svg" alt="star" />)
+                        Array.from({length: 5}).map(() => <img src="/image/icons/star.svg" alt="star" />)
                         }
                         
                         <p>(5)</p>

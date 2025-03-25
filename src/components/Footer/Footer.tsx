@@ -6,7 +6,7 @@ export default function Footer() {
         <footer>
             <div className="container column">
                 <div className="icons">
-                    {linkList.map(( x ) => <img src={`/public/image/icons/${x}.svg`} height={30} alt={`${x}`} /> )}
+                    {linkList.map(( x ) => <img src={`/image/icons/${x}.svg`} height={30} alt={`${x}`} /> )}
                 </div>
                 <div className="footer_content">
                     <div className="contact">

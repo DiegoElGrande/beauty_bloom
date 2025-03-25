@@ -18,7 +18,7 @@ export default function Info() {
                         <button className="explore">Explore More</button>
                     </div>
                 </div>
-                <img src="/public/image/post_image.jpg" alt="post_img" />
+                <img src="/image/post_image.jpg" alt="post_img" />
             </div>
             <div className="post reverse">
                 <div className="info_content">
@@ -36,7 +36,7 @@ export default function Info() {
                         <button className="explore">Explore More</button>
                     </div>
                 </div>
-                <img src="/public/image/post_image2.jpg" alt="post_img" />
+                <img src="/image/post_image2.jpg" alt="post_img" />
             </div>
         </div>
     )

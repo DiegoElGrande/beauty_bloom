@@ -57,11 +57,11 @@
         }
         #or{
             &::before{
-                content: url(/public/image/icons/flower_left.svg);
+                content: url(/image/icons/flower_left.svg);
                 padding: 1rem;
             }
             &::after{
-                content: url(/public/image/icons/flower_right.svg);
+                content: url(/image/icons/flower_right.svg);
                 padding: 1rem;
             }
         }
