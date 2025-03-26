@@ -1,4 +1,4 @@
-import './footer.modules.scss'
+import './footer.scss'
 
 export default function Footer() {
     const linkList = ['instagram', 'facebook', 'twitter', 'pinterest', 'telegram']

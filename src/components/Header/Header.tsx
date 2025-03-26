@@ -1,6 +1,10 @@
-import './header.modules.scss'
-import Account from './Account/Account'
+import './header.scss'
 import { useState } from 'react'
+import { createPortal } from 'react-dom';
+
+type AccountProps = {
+    closeButton: () => void;
+};
 
 export default function Header() {
     const [open, setOpen] = useState(false)
@@ -35,8 +39,30 @@ export default function Header() {
                         <p>cart</p>
                     </li>
                 </ul>
-                {open && <Account closeButton={() => setOpen(!open)} />}
+                {open && createPortal(<Account closeButton={() => setOpen(!open)} />, document.body)}
             </div>
         </header>
+    )
+}
+
+function Account({ closeButton }: AccountProps) {
+
+    return (
+        <div className="overwrap">
+            <div className="menu_account">
+                <img src="/image/icons/close.svg" alt="close" onClick={closeButton} />
+                <div className="login">
+                    <h2>Log in</h2>
+                    <p>Please enter your e-mail and password</p>
+                    <input type="text" name="e-mail" id="userName" placeholder='Email' />
+                    <input type="password" name="password" id="password" placeholder='Password' />
+                    <button>Log in</button>
+                    <p id='or'>or</p>
+                    <button className="google" >Continue with Google</button>
+                    <p>Forgot your password? <button>Recover password</button></p>
+                    <p>New to Bloom Beauty? <button>Create an account</button></p>
+                </div>
+            </div>
+        </div>
     )
 }
