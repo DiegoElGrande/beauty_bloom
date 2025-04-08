@@ -1,10 +1,10 @@
 import './header.scss'
-import { useState } from 'react'
-import { createPortal } from 'react-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { removeItem } from '../../features/cartSlice';
-import { RootState } from '../../app/store';
-import type { CartProps } from '../../features/cartSlice';
+import {useState} from 'react'
+import {createPortal} from 'react-dom';
+import {useSelector, useDispatch} from 'react-redux';
+import {useLoginMutation} from "../../services/dummy.ts";
+import {CartProps, removeItem} from "../../features/cart/cartSlice.ts";
+import {RootState} from "../../app/store/store.ts";
 
 type FunctionProps = {
     closeButton: () => void;
@@ -24,48 +24,77 @@ export default function Header() {
                 </div>
                 <nav>
                     <ul>
-                        <li><button className='link'>Shop all</button></li>
-                        <li><button className='link'>Bestsellers</button></li>
-                        <li><button className='link'>Collection</button></li>
-                        <li><button className='link'>about as</button></li>
-                        <li><button className='link'>blog</button></li>
+                        <li>
+                            <button className='link'>Shop all</button>
+                        </li>
+                        <li>
+                            <button className='link'>Bestsellers</button>
+                        </li>
+                        <li>
+                            <button className='link'>Collection</button>
+                        </li>
+                        <li>
+                            <button className='link'>about as</button>
+                        </li>
+                        <li>
+                            <button className='link'>blog</button>
+                        </li>
                     </ul>
                 </nav>
                 <ul className='top_bar_menu'>
                     <li>
-                        <img src="/image/icons/search.svg" alt="search" />
+                        <img src="/image/icons/search.svg" alt="search"/>
                         <p>search</p>
                     </li>
                     <li onClick={() => setAccountView(!accountView)}>
-                        <img src="/image/icons/account.svg" alt="account" />
+                        <img src="/image/icons/account.svg" alt="account"/>
                         <p>account</p>
                     </li>
-                    <li onClick={() => setCartView(!cartView) }>
-                        <img src="/image/icons/cart.svg" alt="cart" />
+                    <li onClick={() => setCartView(!cartView)}>
+                        <img src="/image/icons/cart.svg" alt="cart"/>
                         <p>cart</p>
                     </li>
                 </ul>
-                {accountView && createPortal(<Account closeButton={() => setAccountView(!accountView)} />, document.body)}
-                {cartView && createPortal(<Cart closeButton={() => setCartView(!cartView)} />, document.body)}
+                {accountView && createPortal(<Account
+                    closeButton={() => setAccountView(!accountView)}/>, document.body)}
+                {cartView && createPortal(<Cart closeButton={() => setCartView(!cartView)}/>, document.body)}
             </div>
         </header>
     )
 }
 
-function Account({ closeButton }: FunctionProps) {
+function Account({closeButton}: FunctionProps) {
+
+    const [login, {isLoading, isError}] = useLoginMutation()
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget);
+        const email = data.get('email') as string;
+        const password = data.get('password') as string;
+
+        login({username: email, password}).unwrap().then(() => {
+            closeButton()
+        })
+    }
 
     return (
         <div className="overwrap">
             <div className="menu_account">
-                <img src="/image/icons/close.svg" alt="close" onClick={closeButton} />
+                <img src="/image/icons/close.svg" alt="close" onClick={closeButton}/>
                 <div className="login">
                     <h2>Log in</h2>
                     <p>Please enter your e-mail and password</p>
-                    <input type="text" name="e-mail" id="userName" placeholder='Email' />
-                    <input type="password" name="password" id="password" placeholder='Password' />
-                    <button>Log in</button>
+                    <form onSubmit={handleSubmit}>
+                        <input type="text" name="email" id="userName" placeholder='Email' value={'emilys'}/>
+                        <input type="password" name="password" id="password" placeholder='Password'
+                               value={'emilyspass'}/>
+                        <button type={'submit'} disabled={isLoading}>Log in</button>
+                        {isLoading && <p>Loading</p>}
+                        {isError && <p>Error</p>}
+                    </form>
                     <p id='or'>or</p>
-                    <button className="google" >Continue with Google</button>
+                    <button className="google">Continue with Google</button>
                     <p>Forgot your password? <button>Recover password</button></p>
                     <p>New to Bloom Beauty? <button>Create an account</button></p>
                 </div>
@@ -74,14 +103,14 @@ function Account({ closeButton }: FunctionProps) {
     )
 }
 
-function Cart({ closeButton }: FunctionProps) {
-    const cartItem : CartProps[] = useSelector( (state: RootState) => state.cart.items);
+function Cart({closeButton}: FunctionProps) {
+    const cartItem: CartProps[] = useSelector((state: RootState) => state.cart.items);
     return (
         <div className="overwrap">
             <div className="cart_menu">
                 <div className="cart_title">
                     <h2>Cart</h2>
-                    <img src="/image/icons/close.svg" onClick={closeButton} height={20} alt="close_cart_button" />
+                    <img src="/image/icons/close.svg" onClick={closeButton} height={20} alt="close_cart_button"/>
                 </div>
                 <div className="cart_content">
                     {cartItem.length > 0 && cartItem.map((item) => <CartItem key={item.id} {...item} />)}
@@ -96,14 +125,14 @@ function Cart({ closeButton }: FunctionProps) {
             </div>
         </div>
     )
-    
+
 }
 
-function CartItem({id, title_card, price, image }: CartProps) {
+function CartItem({id, title_card, price, image}: CartProps) {
     const dispatch = useDispatch();
     return (
         <article>
-            <img src={image} alt="item" />
+            <img src={image} alt="item"/>
             <div className="cart_item">
                 <h4>{title_card}</h4>
                 <p>${price}</p>
