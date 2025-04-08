@@ -4,18 +4,12 @@ import { createPortal } from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeItem } from '../../features/cartSlice';
 import { RootState } from '../../app/store';
+import type { CartProps } from '../../features/cartSlice';
 
 type FunctionProps = {
     closeButton: () => void;
 };
-type CartProps = {
-    title_card: string;
-    price: number;
-    id: number;
-    image: string,
-    new?: boolean,
-    bestseller?: boolean
-}
+
 
 export default function Header() {
     const [accountView, setAccountView] = useState(false)

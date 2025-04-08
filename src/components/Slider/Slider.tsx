@@ -1,18 +1,11 @@
 import './slider.scss'
 import Card from '../Card/Card'
-type CardItem = {
-    id: number,
-    image: string,
-    title_card: string,
-    description: string,
-    price: number,
-    new: boolean,
-    bestseller: boolean
-}
+import type { CartProps } from '../../features/cartSlice'
+
 
 type SliderProps = {
     title: string,
-    content: CardItem[]
+    content: CartProps[]
 }
 
 
@@ -26,7 +19,7 @@ export default function Slider({title, content}: SliderProps) {
             </div>
             <button className="slider_btn left">&#10094;</button>
             <div className="slider_items">
-                {content.map((obj: CardItem, index: number) => <Card key={index} {...obj} />)}
+                {content.map((obj: CartProps, index: number) => <Card key={index} {...obj} />)}
             </div>
             <button className="slider_btn right">&#10095;</button>
         </div>
