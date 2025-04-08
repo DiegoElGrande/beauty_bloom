@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { createPortal } from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeItem } from '../../features/cartSlice';
+import { RootState } from '../../app/store';
 
 type FunctionProps = {
     closeButton: () => void;
@@ -12,8 +13,8 @@ type CartProps = {
     price: number;
     id: number;
     image: string,
-    new: boolean,
-    bestseller: boolean
+    new?: boolean,
+    bestseller?: boolean
 }
 
 export default function Header() {
@@ -80,7 +81,7 @@ function Account({ closeButton }: FunctionProps) {
 }
 
 function Cart({ closeButton }: FunctionProps) {
-    const cartItem : CartProps[] = useSelector((state: unknown) => state.cart.items);
+    const cartItem : CartProps[] = useSelector( (state: RootState) => state.cart.items);
     return (
         <div className="overwrap">
             <div className="cart_menu">

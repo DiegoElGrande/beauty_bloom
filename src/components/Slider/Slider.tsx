@@ -1,6 +1,7 @@
 import './slider.scss'
 import Card from '../Card/Card'
 type CardItem = {
+    id: number,
     image: string,
     title_card: string,
     description: string,
