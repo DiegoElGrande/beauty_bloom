@@ -4,8 +4,7 @@ import './index.scss'
 import Header from './components/Header/Header'
 import Main from './components/Main/Main'
 import Footer from './components/Footer/Footer';
-import { store } from './app/store'
-import { Provider } from 'react-redux'
+import {StoreProvider} from "./app/store/store-provider.tsx";
 
 const container = document.getElementById('root')
 
@@ -13,13 +12,13 @@ if (container) {
   const root = createRoot(container)
 
   root.render(
-    <Provider store={store}>
+    <StoreProvider>
       <StrictMode>
       <Header />
       <Main />
       <Footer />
       </StrictMode>,
-    </Provider>,
+    </StoreProvider>,
   )
 } else {
   throw new Error(
