@@ -1,13 +1,24 @@
 import './header.scss'
 import { useState } from 'react'
 import { createPortal } from 'react-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeItem } from '../../features/cartSlice';
 
-type AccountProps = {
+type FunctionProps = {
     closeButton: () => void;
 };
+type CartProps = {
+    title_card: string;
+    price: number;
+    id: number;
+    image: string,
+    new: boolean,
+    bestseller: boolean
+}
 
 export default function Header() {
-    const [open, setOpen] = useState(false)
+    const [accountView, setAccountView] = useState(false)
+    const [cartView, setCartView] = useState(false)
 
     return (
         <header>
@@ -30,22 +41,23 @@ export default function Header() {
                         <img src="/image/icons/search.svg" alt="search" />
                         <p>search</p>
                     </li>
-                    <li onClick={() => setOpen(!open)}>
+                    <li onClick={() => setAccountView(!accountView)}>
                         <img src="/image/icons/account.svg" alt="account" />
                         <p>account</p>
                     </li>
-                    <li >
+                    <li onClick={() => setCartView(!cartView) }>
                         <img src="/image/icons/cart.svg" alt="cart" />
                         <p>cart</p>
                     </li>
                 </ul>
-                {open && createPortal(<Account closeButton={() => setOpen(!open)} />, document.body)}
+                {accountView && createPortal(<Account closeButton={() => setAccountView(!accountView)} />, document.body)}
+                {cartView && createPortal(<Cart closeButton={() => setCartView(!cartView)} />, document.body)}
             </div>
         </header>
     )
 }
 
-function Account({ closeButton }: AccountProps) {
+function Account({ closeButton }: FunctionProps) {
 
     return (
         <div className="overwrap">
@@ -64,5 +76,51 @@ function Account({ closeButton }: AccountProps) {
                 </div>
             </div>
         </div>
+    )
+}
+
+function Cart({ closeButton }: FunctionProps) {
+    const cartItem : CartProps[] = useSelector((state: unknown) => state.cart.items);
+    return (
+        <div className="overwrap">
+            <div className="cart_menu">
+                <div className="cart_title">
+                    <h2>Cart</h2>
+                    <img src="/image/icons/close.svg" onClick={closeButton} height={20} alt="close_cart_button" />
+                </div>
+                <div className="cart_content">
+                    {cartItem.length > 0 && cartItem.map((item) => <CartItem key={item.id} {...item} />)}
+                </div>
+                <div className="order">
+                    <div className="subtotal">
+                        <p>Subtotal</p>
+                        <p>$23.00</p>
+                    </div>
+                    <button>Checkout</button>
+                </div>
+            </div>
+        </div>
+    )
+    
+}
+
+function CartItem({id, title_card, price, image }: CartProps) {
+    const dispatch = useDispatch();
+    return (
+        <article>
+            <img src={image} alt="item" />
+            <div className="cart_item">
+                <h4>{title_card}</h4>
+                <p>${price}</p>
+                <div className="cart_count">
+                    <div className="count">
+                        <button>-</button>
+                        <p>1</p>
+                        <button>+</button>
+                    </div>
+                    <button className='close_button' onClick={() => dispatch(removeItem(id))}></button>
+                </div>
+            </div>
+        </article>
     )
 }

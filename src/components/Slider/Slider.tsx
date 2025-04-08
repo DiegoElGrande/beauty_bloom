@@ -1,11 +1,12 @@
 import './slider.scss'
 import Card from '../Card/Card'
-
 type CardItem = {
     image: string,
     title_card: string,
     description: string,
     price: number,
+    new: boolean,
+    bestseller: boolean
 }
 
 type SliderProps = {

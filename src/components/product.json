@@ -1,0 +1,38 @@
+[
+    {   
+        "id": 1,
+        "image": "/image/product/safe_block_essence.jpg",
+        "title_card": "All-Around Safe Block Essence Sun SPF45+",
+        "description": "All Around Safe Block Sun Milk SPF50+/PA+++",
+        "price": 32,
+        "bestseller": true,
+        "new": false
+    },
+    {   
+        "id": 2,
+        "image": "/image/product/aqua_snail.jpg",
+        "title_card": "Super Aqua Snail Cream",
+        "description": "Skin Reinforcement Gel Type Cream",
+        "price": 28,
+        "bestseller": true,
+        "new": false
+    },
+    {
+        "id": 3,
+        "image": "/image/product/clarifying_emulsion.jpg",
+        "title_card": "Clarifying Emulsion",
+        "description": "with Bija Seed Oil",
+        "price": 14,
+        "bestseller": true,
+        "new": true
+    },
+    {
+        "id": 4,
+        "image": "/image/product/jelly_cream.jpg",
+        "title_card": "Dewy Glow Jelly Cream",
+        "description": "With Jeju Cherry Blossom",
+        "price": 20,
+        "bestseller": true,
+        "new": true
+    }
+]
