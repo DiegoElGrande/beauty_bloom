@@ -87,8 +87,7 @@ function Account({closeButton}: FunctionProps) {
                     <p>Please enter your e-mail and password</p>
                     <form onSubmit={handleSubmit}>
                         <input type="text" name="email" id="userName" placeholder='Email' value={'emilys'}/>
-                        <input type="password" name="password" id="password" placeholder='Password'
-                               value={'emilyspass'}/>
+                        <input type="password" name="password" id="password" placeholder='Password' value={'emilyspass'}/>
                         <button type={'submit'} disabled={isLoading}>Log in</button>
                         {isLoading && <p>Loading</p>}
                         {isError && <p>Error</p>}
