@@ -9,7 +9,7 @@ export default function Community() {
             </div>
             <div className="image_items">
                 {
-                    Array.from({ length: 8 }).map(() => <img src="/image/community/image_1.jpg" alt="" />)
+                    Array.from({ length: 8 }).map((_, index) => <img src="/image/community/image_1.jpg" key={index} alt="" />)
                 }
             </div>
             <button>Follow Us</button>

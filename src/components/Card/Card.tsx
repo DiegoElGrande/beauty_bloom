@@ -14,7 +14,7 @@ export default function Card({id, image, title_card, description, price}: CartPr
                     <strong>{title_card}</strong>
                     <div className="raiting">
                         {
-                        Array.from({length: 5}).map(() => <img src="/image/icons/star.svg" alt="star" />)
+                        Array.from({length: 5}).map((_, index) => <img src="/image/icons/star.svg" key={`star-${index}`} alt="star" />)
                         }
                         <p>(5)</p>
                     </div>

@@ -19,7 +19,7 @@ export default function Slider({title, content}: SliderProps) {
             </div>
             <button className="slider_btn left">&#10094;</button>
             <div className="slider_items">
-                {content.map((obj: CartProps, index: number) => <Card key={index} {...obj} />)}
+                {content.map((obj: CartProps) => <Card {...obj} key={obj.id} />)}
             </div>
             <button className="slider_btn right">&#10095;</button>
         </div>
