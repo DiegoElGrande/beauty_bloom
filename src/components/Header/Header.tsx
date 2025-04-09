@@ -1,10 +1,13 @@
 import './header.scss'
-import { useState } from 'react'
+import {useContext, useEffect, useState} from 'react'
 import { createPortal } from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeItem } from '../../features/cartSlice';
 import { RootState } from '../../app/store';
 import type { CartProps } from '../../features/cartSlice';
+import {AuthContext} from "../../app/context/auth-context.tsx";
+import dummyApi from "../../services/dummy-api";
+import {UserContext} from "../../app/context/user-context.ts";
 
 type FunctionProps = {
     closeButton: () => void;
@@ -14,6 +17,10 @@ type FunctionProps = {
 export default function Header() {
     const [accountView, setAccountView] = useState(false)
     const [cartView, setCartView] = useState(false)
+
+    const {isAuthenticated, setIsAuthenticated} = useContext(AuthContext)
+
+    const handleLogout = () => { dummyApi.logout(); setIsAuthenticated(false) }
 
     return (
         <header>
@@ -36,10 +43,14 @@ export default function Header() {
                         <img src="/image/icons/search.svg" alt="search" />
                         <p>search</p>
                     </li>
-                    <li onClick={() => setAccountView(!accountView)}>
-                        <img src="/image/icons/account.svg" alt="account" />
+                    {!isAuthenticated && <li onClick={() => setAccountView(!accountView)}>
+                        <img src="/image/icons/account.svg" alt="account"/>
                         <p>account</p>
-                    </li>
+                    </li>}
+                    {isAuthenticated && <li onClick={handleLogout}>
+                        <img src="/image/icons/cart.svg" alt="cart"/>
+                        <p>Log Out</p>
+                    </li>}
                     <li onClick={() => setCartView(!cartView) }>
                         <img src="/image/icons/cart.svg" alt="cart" />
                         <p>cart</p>
@@ -53,19 +64,36 @@ export default function Header() {
 }
 
 function Account({ closeButton }: FunctionProps) {
+    const {setIsAuthenticated} = useContext(AuthContext)
+    const {setUser} = useContext(UserContext)
+
     function viewValue(value: unknown) {
         console.log(value);
     }
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget);
+        const email = data.get('email') as string;
+        const password = data.get('password') as string;
+
+        dummyApi.login({username: email, password}).then((res) => {
+            setIsAuthenticated(true)
+            setUser(res)
+            closeButton()
+        })
+    }
+
     return (
         <div className="overwrap">
             <div className="menu_account">
                 <img src="/image/icons/close.svg" alt="close" onClick={closeButton} />
                 <div className="login">
-                    <form action="login" >
+                    <form action="login" onSubmit={handleSubmit}>
                         <h2>Log in</h2>
                         <p>Please enter your e-mail and password</p>
-                        <input type="text" name="e-mail" id="userName" placeholder='Email' />
-                        <input type="password" name="password" id="password" placeholder='Password' />
+                        <input type="text" name="email" id="userName" placeholder='Email' value={'emilys'}/>
+                        <input type="password" name="password" id="password" placeholder='Password' value={'emilyspass'}/>
                         <button type="submit" onClick={(i) => viewValue(i)}>Log in</button>
                     </form>
                     <p id='or'>or</p>
@@ -79,7 +107,16 @@ function Account({ closeButton }: FunctionProps) {
 }
 
 function Cart({ closeButton }: FunctionProps) {
+    const [cart, setCart] = useState(null);
     const cartItem : CartProps[] = useSelector( (state: RootState) => state.cart.items);
+    const {user} = useContext(UserContext)
+
+    useEffect(() => {
+        dummyApi.getCart(user.id).then((r) => {
+            setCart(r)
+        })
+    }, [])
+
     return (
         <div className="overwrap">
             <div className="cart_menu">
@@ -88,6 +125,7 @@ function Cart({ closeButton }: FunctionProps) {
                     <img src="/image/icons/close.svg" onClick={closeButton} height={20} alt="close_cart_button" />
                 </div>
                 <div className="cart_content">
+                    {JSON.stringify(cart, null, 2)}
                     {cartItem.length > 0 && cartItem.map((item) => <CartItem key={item.id} {...item} />)}
                 </div>
                 <div className="order">

@@ -6,6 +6,8 @@ import Main from './components/Main/Main'
 import Footer from './components/Footer/Footer';
 import { store } from './app/store'
 import { Provider } from 'react-redux'
+import { AuthProvider } from "./app/providers/auth-provider.tsx";
+import { UserProvider } from "./app/providers/user-provider.tsx";
 
 const container = document.getElementById('root')
 
@@ -13,13 +15,17 @@ if (container) {
   const root = createRoot(container)
 
   root.render(
+      <AuthProvider>
+          <UserProvider>
     <Provider store={store}>
       <StrictMode>
       <Header />
       <Main />
       <Footer />
-      </StrictMode>,
-    </Provider>,
+      </StrictMode>
+    </Provider>
+          </UserProvider>
+      </AuthProvider>
   )
 } else {
   throw new Error(
