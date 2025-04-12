@@ -1,6 +1,6 @@
 import './slider.scss'
 import Card from '../Card/Card'
-import type { CartProps } from '../../features/cartSlice'
+import type { CartProps } from '../../features/cart/cartSlice'
 
 
 type SliderProps = {

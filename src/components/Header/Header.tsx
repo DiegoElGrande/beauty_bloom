@@ -2,9 +2,9 @@ import './header.scss'
 import { useState } from 'react'
 import { createPortal } from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeItem } from '../../features/cartSlice';
+import { removeItem } from '../../features/cart/cartSlice';
 import { RootState } from '../../app/store';
-import type { CartProps } from '../../features/cartSlice';
+import type { CartProps } from '../../features/cart/cartSlice';
 
 type FunctionProps = {
     closeButton: () => void;
@@ -44,18 +44,16 @@ export default function Header() {
                         <img src="/image/icons/cart.svg" alt="cart" />
                         <p>cart</p>
                     </li>
+                    {accountView && createPortal(<Account closeButton={() => setAccountView(!accountView)} />, document.body)}
+                    {cartView && createPortal(<Cart closeButton={() => setCartView(!cartView)} />, document.body)}
                 </ul>
-                {accountView && createPortal(<Account closeButton={() => setAccountView(!accountView)} />, document.body)}
-                {cartView && createPortal(<Cart closeButton={() => setCartView(!cartView)} />, document.body)}
             </div>
         </header>
     )
 }
 
 function Account({ closeButton }: FunctionProps) {
-    function viewValue(value: unknown) {
-        console.log(value);
-    }
+    
     return (
         <div className="overwrap">
             <div className="menu_account">
@@ -66,7 +64,7 @@ function Account({ closeButton }: FunctionProps) {
                         <p>Please enter your e-mail and password</p>
                         <input type="text" name="e-mail" id="userName" placeholder='Email' />
                         <input type="password" name="password" id="password" placeholder='Password' />
-                        <button type="submit" onClick={(i) => viewValue(i)}>Log in</button>
+                        <button type="submit">Log in</button>
                     </form>
                     <p id='or'>or</p>
                     <button className="google" >Continue with Google</button>

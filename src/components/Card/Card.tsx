@@ -1,7 +1,7 @@
 import './card.scss'
 import { useDispatch } from 'react-redux'
-import { addItem } from '../../features/cartSlice'
-import type { CartProps } from '../../features/cartSlice'
+import { addItem } from '../../features/cart/cartSlice'
+import type { CartProps } from '../../features/cart/cartSlice'
 
 export default function Card({id, image, title_card, description, price}: CartProps) {
     const dispatch = useDispatch();
