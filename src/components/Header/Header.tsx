@@ -1,10 +1,12 @@
 import './header.scss'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { createPortal } from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeItem } from '../../features/cart/cartSlice';
 import { RootState } from '../../app/store';
+import dummyApi from "../../services/dummy-api";
 import type { CartProps } from '../../features/cart/cartSlice';
+
 
 type FunctionProps = {
     closeButton: () => void;
@@ -53,17 +55,22 @@ export default function Header() {
 }
 
 function Account({ closeButton }: FunctionProps) {
-    
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget);
+        const username = data.get('username');
+        const password = data.get('password');
+    }
     return (
         <div className="overwrap">
             <div className="menu_account">
                 <img src="/image/icons/close.svg" alt="close" onClick={closeButton} />
                 <div className="login">
-                    <form action="login" >
+                    <form onSubmit={handleSubmit} >
                         <h2>Log in</h2>
                         <p>Please enter your e-mail and password</p>
-                        <input type="text" name="e-mail" id="userName" placeholder='Email' />
-                        <input type="password" name="password" id="password" placeholder='Password' />
+                        <input type="text" name="username" id="username" placeholder='Email' value={'emilys'}/>
+                        <input type="password" name="password" id="password" placeholder='Password' value={'emilyspass'}/>
                         <button type="submit">Log in</button>
                     </form>
                     <p id='or'>or</p>
