@@ -1,14 +1,14 @@
 import {deleteRefreshToken, getRefreshToken, setRefreshToken} from './utils/refresh-token-storage.ts'
 
-type User = {
-    id: number;
-}
+// type User = {
+//     id: number;
+// }
 
 const EXPIRES_IN_MINS = 1;
 
 class DummyApi {
     private host: string;
-    private user: User | null = null;
+    // private user: User | null = null;
     private token: string | null = null;
 
     constructor(host: string) {
