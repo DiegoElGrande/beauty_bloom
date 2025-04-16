@@ -1,9 +1,9 @@
 import './header.scss'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { createPortal } from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeItem } from '../../features/cart/cartSlice';
-import { login, logout, clearError } from '../../features/auth/authSlice';
+import { login, logout } from '../../features/auth/authSlice';
 import { RootState } from '../../app/store';
 import dummyApi from '../../service/dummy-api';
 import type { CartProps } from '../../features/cart/cartSlice';
@@ -15,8 +15,17 @@ type FunctionProps = {
 
 
 export default function Header() {
+    const dispatch = useDispatch();
     const [accountView, setAccountView] = useState(false)
     const [cartView, setCartView] = useState(false)
+    const auth = useSelector((state: RootState) => state.auth);
+    const onClickAccount = () => {
+        if (auth.status === 'succeeded') {
+            dispatch(logout())
+        } else {
+            setAccountView(!accountView);
+        }
+    }
 
     return (
         <header>
@@ -39,15 +48,15 @@ export default function Header() {
                         <img src="/image/icons/search.svg" alt="search" />
                         <p>search</p>
                     </li>
-                    <li onClick={() => setAccountView(!accountView)}>
+                    <li onClick={onClickAccount}>
                         <img src="/image/icons/account.svg" alt="account" />
-                        <p>account</p>
+                        {auth.status === 'idle' ? <p>account</p> : <p>logout</p>}
                     </li>
                     <li onClick={() => setCartView(!cartView) }>
                         <img src="/image/icons/cart.svg" alt="cart" />
                         <p>cart</p>
                     </li>
-                    {accountView && createPortal(<Account closeButton={() => setAccountView(!accountView)} />, document.body)}
+                    {auth.status === 'idle' && accountView && createPortal(<Account closeButton={() => setAccountView(!accountView)} />, document.body)}
                     {cartView && createPortal(<Cart closeButton={() => setCartView(!cartView)} />, document.body)}
                 </ul>
             </div>
@@ -57,7 +66,6 @@ export default function Header() {
 
 function Account({ closeButton }: FunctionProps) {
     const dispatch = useDispatch();
-    const user = useSelector( (state: RootState) => state.auth.user);
     const [ username, setUsername] = useState<string>('emilys');
     const [ password, setPassword] = useState<string>('emilyspass');
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -65,13 +73,10 @@ function Account({ closeButton }: FunctionProps) {
         
         dummyApi.login({username, password}).then(res => {
             dispatch(login(res));
-            dispatch(clearError());
+        }).then(() => {
+            closeButton();
         })
-        closeButton();
     }
-    useEffect(() => {
-        console.log(user);
-    }, [user])
     return (
         <div className="overwrap">
             <div className="menu_account">

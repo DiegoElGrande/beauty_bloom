@@ -88,7 +88,12 @@ class DummyApi {
     getCart(userId: number) {
 
         return this.get(
-            `carts/user/${userId}`
+            `carts/user/${userId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${this.token}`,
+                }
+            }
         )
     }
 }
