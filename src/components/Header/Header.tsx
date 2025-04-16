@@ -66,14 +66,17 @@ export default function Header() {
 
 function Account({ closeButton }: FunctionProps) {
     const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(false);
     const [ username, setUsername] = useState<string>('emilys');
     const [ password, setPassword] = useState<string>('emilyspass');
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         
         dummyApi.login({username, password}).then(res => {
+            setIsLoading(true);
             dispatch(login(res));
         }).then(() => {
+            setIsLoading(false);
             closeButton();
         })
     }
@@ -101,7 +104,7 @@ function Account({ closeButton }: FunctionProps) {
                             value={password} 
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        <button type="submit">Log in</button>
+                        <button type="submit" disabled={isLoading}>Log in</button>
                     </form>
                     <p id='or'>or</p>
                     <button className="google" >Continue with Google</button>
