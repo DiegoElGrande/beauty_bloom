@@ -1,10 +1,11 @@
 import './header.scss'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeItem } from '../../features/cart/cartSlice';
+import { login, logout, clearError } from '../../features/auth/authSlice';
 import { RootState } from '../../app/store';
-import dummyApi from "../../services/dummy-api";
+import dummyApi from '../../service/dummy-api';
 import type { CartProps } from '../../features/cart/cartSlice';
 
 
@@ -55,12 +56,22 @@ export default function Header() {
 }
 
 function Account({ closeButton }: FunctionProps) {
+    const dispatch = useDispatch();
+    const user = useSelector( (state: RootState) => state.auth.user);
+    const [ username, setUsername] = useState<string>('emilys');
+    const [ password, setPassword] = useState<string>('emilyspass');
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const data = new FormData(e.currentTarget);
-        const username = data.get('username');
-        const password = data.get('password');
+        
+        dummyApi.login({username, password}).then(res => {
+            dispatch(login(res));
+            dispatch(clearError());
+        })
+        closeButton();
     }
+    useEffect(() => {
+        console.log(user);
+    }, [user])
     return (
         <div className="overwrap">
             <div className="menu_account">
@@ -69,8 +80,22 @@ function Account({ closeButton }: FunctionProps) {
                     <form onSubmit={handleSubmit} >
                         <h2>Log in</h2>
                         <p>Please enter your e-mail and password</p>
-                        <input type="text" name="username" id="username" placeholder='Email' value={'emilys'}/>
-                        <input type="password" name="password" id="password" placeholder='Password' value={'emilyspass'}/>
+                        <input 
+                            type="text" 
+                            name="username" 
+                            id="username" 
+                            placeholder='Email' 
+                            value={username} 
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <input
+                            type="password" 
+                            name="password" 
+                            id="password" 
+                            placeholder='Password' 
+                            value={password} 
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
                         <button type="submit">Log in</button>
                     </form>
                     <p id='or'>or</p>
